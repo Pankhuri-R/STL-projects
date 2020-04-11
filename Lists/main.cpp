@@ -135,10 +135,10 @@ void test5()
 
 void test6()
 {
-    std::list<Person>stooges{{"Chan",97},{"Monica",100},{"Rach",50}};
+   std::list<Person>stooges{{"Harry",98},{"Ron",86},{"Hermione",24}};
     display(stooges);
-    stooges.sort();
-    display(stooges);
+   stooges.sort();
+   display(stooges);
 }
 
 int main()
