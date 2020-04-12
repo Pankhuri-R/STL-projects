@@ -1,94 +1,44 @@
 #include<iostream>
-#include<set>
-#include<map>
-#include<fstream>
-#include<sstream>
-#include<iomanip>
-#include<algorithm>
+#include<queue>
+#include<stack>
 
-void display_words(std::map<std::string,int>&m)
+template<typename T>
+void display(std::queue<T>q)
 {
-    std::cout<<std::setw(12)<<std::left<<"\nWORD"
-                  <<std::setw(20)<<std::right<<"COUNT"<<std::endl;
-    std::cout<<"-------------------------------------------------------"<<std::endl;
-    for(const auto &elem:m){
-        std::cout<<std::setw(12)<<std::left<<elem.first
-                      <<std::setw(20)<<std::right<<elem.second<<std::endl;
+    std::cout<<"[ ";
+    while(!q.empty()){
+        T elem=q.front();
+        q.pop();
+        std::cout<<elem<<" ";
     }
-}
-
-void display_words(std::map<std::string,std::set<int>>&m)
-{
-    std::cout<<std::setw(12)<<std::left<<"\nWORD"
-                  <<std::setw(20)<<std::right<<"OCCURRENCES"<<std::endl;
-    std::cout<<"----------------------------------------------------------"<<std::endl;
-    for(const auto &elem:m){
-        std::cout<<std::setw(12)<<std::left<<elem.first<<"[ ";
-        for(const auto &i:elem.second)
-            std::cout<<i<<" ";
-        std::cout<<"]"<<std::endl;
-    }
-}
-
-std::string clean_string(const std::string &s){
-    std::string result;
-    for(char c:s){
-        if(c=='.' || c==',' || c=='?' || c=='!')
-            continue;
-        else
-            result+=c;
-    }
-    return result;
-}
-
-void part1()
-{
-    std::map<std::string,int>words;
-    std::string line;
-    std::string word;
-    std::ifstream in_file("ThirstyCrow.txt");
-    if(in_file){
-        while(std::getline(in_file,line)){
-            std::stringstream ss(line);
-            while(ss>>word){
-                word=clean_string(word);
-                words[word]++;
-            }
-        }
-        in_file.close();
-        display_words(words);
-    }
-    else
-        std::cerr<<"Error opening the file"<<std::endl;
-}
-
-void part2()
-{
-    std::map<std::string,std::set<int>>words;
-    std::string line;
-    std::string word;
-    std::ifstream in_file("ThirstyCrow.txt");
-    if(in_file){
-        int line_number{0};
-        while(std::getline(in_file,line)){
-            line_number++;
-            std::stringstream ss(line);
-            while(ss>>word){
-                word=clean_string(word);
-                words[word].insert(line_number);
-                
-            }
-        }
-        in_file.close();
-        display_words(words);
-    }
-    else
-        std::cerr<<"Error opening the file"<<std::endl; 
+    std::cout<<"]"<<std::endl;
 }
 
 int main()
 {
-    part1();
-    part2();
+    std::queue<int>nums;
+    
+    for(int i:{1,2,3,4,5})
+        nums.push(i);
+    display(nums);
+    
+    std::cout<<"Front: "<<nums.front()<<std::endl;
+    std::cout<<"Back: "<<nums.back()<<std::endl;
+    
+    nums.pop();
+    nums.pop();
+    display(nums);
+    
+    while(!nums.empty())
+        nums.pop();
+    display(nums);
+    
+    nums.push(1000);
+    nums.push(50);
+    nums.push(24);
+    display(nums);
+    
+    nums.back()=100;
+    display(nums);
     return 0;
 }
